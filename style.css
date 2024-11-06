@@ -1,0 +1,126 @@
+/* Estilos generales */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
+}
+
+/* Estilo para el título y subtítulo */
+h1 {
+    font-size: 1.8em;
+    color: #4A90E2;
+    margin-bottom: 5px;
+}
+
+h2 {
+    font-size: 1em;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* Estilo de la lista de categorías */
+#checklist h3 {
+    color: #4A90E2;
+    margin: 15px 0 10px;
+    font-size: 1.2em;
+}
+
+/* Estilo de la lista de alimentos */
+#checklist ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+#checklist li {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin: 8px 0;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo del texto de cada alimento */
+#checklist li span {
+    flex-grow: 1;
+    margin-left: 10px;
+    font-size: 0.95em;
+}
+
+/* Estilo del checkbox y del input de cantidad */
+input[type="checkbox"] {
+    transform: scale(1.2);
+    accent-color: #4A90E2;
+}
+
+input[type="number"] {
+    width: 80px;
+    padding: 5px;
+    margin-left: 10px;
+    font-size: 0.9em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Botón de limpiar checklist */
+#resetButton {
+    background-color: #FF6B6B;
+    color: #fff;
+    font-size: 1em;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    max-width: 300px;
+}
+
+#resetButton:hover {
+    background-color: #ff5a5a;
+}
+
+/* Ajustes para que se vea bien en dispositivos móviles */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 0.9em;
+    }
+
+    #resetButton {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    #checklist li {
+        padding: 10px;
+    }
+
+    input[type="number"] {
+        width: 70px;
+    }
+}
