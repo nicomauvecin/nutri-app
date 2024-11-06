@@ -1,27 +1,33 @@
 const foods = {
     carbohydrates: [
-        { name: "Yogur descremado (1 vaso de 200cc)", requiredAmount: 200, unit: "ml", consumed: 0 },
-        { name: "Leche descremada (1 taza o vaso de 200cc)", requiredAmount: 200, unit: "ml", consumed: 0 },
-        { name: "Granola o quínoa pop (50g)", requiredAmount: 50, unit: "g", consumed: 0 },
-        { name: "Pan integral (4 rebanadas)", requiredAmount: 4, unit: "rebanadas", consumed: 0 },
-        { name: "Arroz o fideos o polenta o legumbres en crudo", requiredAmount: 140, unit: "g", consumed: 0 },
-        { name: "Papa o batata (cocido)", requiredAmount: 300, unit: "g", consumed: 0 },
-        { name: "Membrillo o dulce de batata (80g, solo post entreno)", requiredAmount: 80, unit: "g", consumed: 0 },
-        { name: "Frutas (3 frutas de 250g cada una)", requiredAmount: 750, unit: "g", consumed: 0 },
-        { name: "Miel (1 cda)", requiredAmount: 1, unit: "cda", consumed: 0 }
+        { name: "Yogur descremado", requiredAmount: 200, unit: "ml", consumed: 0, increment: 50 },
+        { name: "Leche descremada", requiredAmount: 200, unit: "ml", consumed: 0, increment: 50 },
+        { name: "Granola o quínoa pop", requiredAmount: 50, unit: "g", consumed: 0, increment: 50 },
+        { name: "Pan integral", requiredAmount: 4, unit: "rebanadas", consumed: 0, increment: 1 },
+        { name: "Arroz o fideos o polenta o legumbres en crudo", requiredAmount: 140, unit: "g", consumed: 0, increment: 50 },
+        { name: "Papa o batata (cocido)", requiredAmount: 300, unit: "g", consumed: 0, increment: 50 },
+        { name: "Membrillo o dulce de batata (solo post entreno)", requiredAmount: 80, unit: "g", consumed: 0, increment: 50 },
+        { name: "Frutas (total al día)", requiredAmount: 750, unit: "g", consumed: 0, increment: 50 },
+        { name: "Miel", requiredAmount: 1, unit: "cda", consumed: 0, increment: 1 }
     ],
     proteins: [
-        { name: "Huevos enteros (4 unidades)", requiredAmount: 4, unit: "unidades", consumed: 0 },
-        { name: "Carne magra", requiredAmount: 400, unit: "g", consumed: 0 },
-        { name: "Jamón cocido (2 fetas)", requiredAmount: 2, unit: "fetas", consumed: 0 },
-        { name: "Queso untable light o descremado", requiredAmount: 2, unit: "cdas", consumed: 0 },
-        { name: "Queso cuartirolo magro o Port Salut light (50g)", requiredAmount: 50, unit: "g", consumed: 0 }
+        { name: "Huevos enteros", requiredAmount: 4, unit: "unidades", consumed: 0, increment: 1 },
+        { name: "Carne magra", requiredAmount: 400, unit: "g", consumed: 0, increment: 50 },
+        { name: "Jamón cocido", requiredAmount: 2, unit: "fetas", consumed: 0, increment: 1 },
+        { name: "Queso untable light o descremado", requiredAmount: 2, unit: "cdas", consumed: 0, increment: 1 },
+        { name: "Queso cuartirolo magro o Port Salut light", requiredAmount: 50, unit: "g", consumed: 0, increment: 50 }
     ],
     fats: [
-        { name: "Aceite de oliva extra virgen (2 cdas)", requiredAmount: 2, unit: "cdas", consumed: 0 },
-        { name: "Aceitunas (como sustituto de aceite)", requiredAmount: 8, unit: "unidades", consumed: 0 },
-        { name: "Palta (como sustituto de aceite)", requiredAmount: 3, unit: "cdas", consumed: 0 },
-        { name: "Mantequilla de maní (1 cda)", requiredAmount: 1, unit: "cda", consumed: 0 }
+        { name: "Aceite de oliva extra virgen", requiredAmount: 2, unit: "cdas", consumed: 0, increment: 1 },
+        { name: "Aceitunas (como sustituto de aceite)", requiredAmount: 8, unit: "unidades", consumed: 0, increment: 1 },
+        { name: "Palta (como sustituto de aceite)", requiredAmount: 3, unit: "cdas", consumed: 0, increment: 1 },
+        { name: "Mantequilla de maní", requiredAmount: 1, unit: "cda", consumed: 0, increment: 1 }
+    ],
+    water: [
+        { name: "Agua", requiredAmount: 2000, unit: "ml", consumed: 0, increment: 500 }
+    ],
+    supplements: [
+        { name: "Creatina", requiredAmount: 1, unit: "cda", consumed: 0, increment: 1 }
     ]
 };
 
@@ -39,28 +45,49 @@ function createChecklist() {
             checkbox.disabled = true;  // Desactivado, se marcará automáticamente
             checkbox.checked = item.consumed >= item.requiredAmount;
             
-            // Nombre del alimento
+            // Nombre del alimento con la cantidad requerida
             const label = document.createElement('span');
             label.textContent = `${item.name} (Requerido: ${item.requiredAmount}${item.unit})`;
             
-            // Input para agregar cantidad consumida
-            const input = document.createElement('input');
-            input.type = 'number';
-            input.placeholder = `Consumido (${item.unit})`;
-            input.value = item.consumed;
-            input.addEventListener('change', () => {
-                const consumedAmount = parseFloat(input.value) || 0;
-                item.consumed = consumedAmount;
-                checkbox.checked = item.consumed >= item.requiredAmount;
+            // Botón para restar cantidad
+            const subtractButton = document.createElement('button');
+            subtractButton.textContent = "-";
+            subtractButton.addEventListener('click', () => {
+                item.consumed = Math.max(0, item.consumed - item.increment);
+                updateUI(item, input, checkbox);
                 saveProgress();
             });
             
+            // Input para mostrar cantidad consumida
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.readOnly = true;
+            input.value = item.consumed;
+            
+            // Botón para sumar cantidad
+            const addButton = document.createElement('button');
+            addButton.textContent = "+";
+            addButton.addEventListener('click', () => {
+                item.consumed += item.increment;
+                updateUI(item, input, checkbox);
+                saveProgress();
+            });
+            
+            // Agregar elementos al item de la lista
             listItem.appendChild(checkbox);
             listItem.appendChild(label);
+            listItem.appendChild(subtractButton);
             listItem.appendChild(input);
+            listItem.appendChild(addButton);
             list.appendChild(listItem);
         });
     }
+}
+
+// Actualizar el estado de los elementos en la interfaz de usuario
+function updateUI(item, input, checkbox) {
+    input.value = item.consumed;
+    checkbox.checked = item.consumed >= item.requiredAmount;
 }
 
 // Mostrar la fecha actual en el subtítulo
