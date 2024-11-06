@@ -42,8 +42,16 @@ function createChecklist() {
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.id = `${category}-${index}`;
-            checkbox.disabled = true;  // Desactivado, se marcará automáticamente
             checkbox.checked = item.consumed >= item.requiredAmount;
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    item.consumed = item.requiredAmount; // Marcar como completo
+                } else {
+                    item.consumed = 0; // Desmarcar y reiniciar
+                }
+                updateUI(item, input, checkbox);
+                saveProgress();
+            });
             
             // Nombre del alimento con la cantidad requerida
             const label = document.createElement('span');
