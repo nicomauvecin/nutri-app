@@ -5,7 +5,7 @@ const foods = {
         { name: "Granola o quínoa pop", requiredAmount: 50, unit: "g", consumed: 0, increment: 50 },
         { name: "Pan integral", requiredAmount: 4, unit: "rebanadas", consumed: 0, increment: 1 },
         { name: "Arroz o fideos o polenta o legumbres en crudo", requiredAmount: 140, unit: "g", consumed: 0, increment: 50 },
-        { name: "Papa o batata (cocido)", requiredAmount: 300, unit: "g", consumed: 0, increment: 50 },
+        { name: "Papa o batata (como sustituto de arroz)", requiredAmount: 300, unit: "g", consumed: 0, increment: 50 },
         { name: "Membrillo o dulce de batata (solo post entreno)", requiredAmount: 80, unit: "g", consumed: 0, increment: 50 },
         { name: "Frutas (total al día)", requiredAmount: 750, unit: "g", consumed: 0, increment: 50 },
         { name: "Miel", requiredAmount: 1, unit: "cda", consumed: 0, increment: 1 }
